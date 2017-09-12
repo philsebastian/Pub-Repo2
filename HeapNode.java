@@ -1,38 +1,59 @@
 /**
+ * Class representing a node in a heap ADT. 
  * 
- */
-
-/**
- * @author Phillip Sebastian
+ * @author CS 321 
  *
+ * @param <T> - generic object of type T 
  */
-public class HeapNode<T>{
-
-	private T object;
-	private int key;
+public class HeapNode<T>
+{
+	private T object;	// reference to object stored at node
+	private int key;		// reference to key of object 
 	
-	public HeapNode(T data, int startKey) {
-		this.object = data;
-		this.key = startKey;
+	/**
+	 * Basic constructor  
+	 */
+	public HeapNode(T object, int key)
+	{
+		setObject(object); 
+		setKey(key); 
 	}
 	
-	public T getObject() {
-		// TODO 
-		return null;
+	/**
+	 * Returns object stored in node. 
+	 * @return - object of type T 
+	 */
+	public T getObject()
+	{
+		return object;
 	}
-
-	public void setObject(T data) {
-		// TODO 
-		
+	
+	/**
+	 * Sets object stored in node to given value. 
+	 * @param object - object of type T 
+	 */
+	public void setObject(T object)
+	{
+		this.object = object;
 	}
-
-	public int getKey() {
-		// TODO 
-		return 0;
+	
+	/**
+	 * Returns key value of the node
+	 * @return - int value 
+	 */
+	public int getKey()
+	{
+		return key;
 	}
-
-	public void setKey(int key) {
-		// TODO		
-	}
-
+	
+	/**
+	 * Sets key to given value 
+	 * @param key - int value 
+	 */
+	public void setKey(int key)
+	{
+		this.key = key;
+	} 
+	
+	
 }
