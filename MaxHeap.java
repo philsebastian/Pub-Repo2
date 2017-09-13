@@ -15,9 +15,9 @@ public class MaxHeap<T>{
 	 * 
 	 */
 	public MaxHeap() {
-		this.setCapacity(this.DEFAULT_CAPACITY);
-		this.setHeapSize(0);
-		this.heap = new HeapNode<?>[this.capacity + 1]; // PHIL TODO - check this
+		setCapacity(DEFAULT_CAPACITY);
+		setHeapSize(0);
+		heap = new HeapNode<?>[capacity + 1]; // PHIL TODO - check this
 	}
 	/**
 	 * 
@@ -25,18 +25,18 @@ public class MaxHeap<T>{
 	 * @param keyArray
 	 */
 	public MaxHeap(T[] dataArray, int[] keyArray) { 	
-		this.setCapacity(dataArray.length);
-		this.setHeapSize(dataArray.length);
-		this.heap = new HeapNode<?>[this.capacity + 1]; // PHIL TODO - check this
+		setCapacity(dataArray.length);
+		setHeapSize(dataArray.length);
+		heap = new HeapNode<?>[capacity + 1]; // PHIL TODO - check this
 		
 		// Below A.K.A. Build-Max-Heap
 		// First build array
 		for (int i = 0; i < dataArray.length; i++) {
-			this.heap[i + 1] = new HeapNode<T>(dataArray[i], keyArray[i]);
+			heap[i + 1] = new HeapNode<T>(dataArray[i], keyArray[i]);
 		}
 		// Max-Heapify the Array
-		for (int i = this.heapSize / 2; i > 0; i--) {
-			this.maxHeapify(i);
+		for (int i = heapSize / 2; i > 0; i--) {
+			maxHeapify(i);
 		}
 	}
 	/**
@@ -44,16 +44,16 @@ public class MaxHeap<T>{
 	 * @return
 	 */
 	public T heapMax() {
-		return (T) this.heap[1].getObject();
+		return (T) heap[1].getObject();
 	}
 	/**
 	 * 
 	 * @return
 	 */
 	public T extractHeapMax() {
-		T tmpT = this.heapMax();
-		this.heap[1] = this.heap[this.heapSize--];
-		this.maxHeapify(1);
+		T tmpT = heapMax();
+		heap[1] = heap[heapSize--];
+		maxHeapify(1);
 		return tmpT;
 	}
 	/**
@@ -62,8 +62,8 @@ public class MaxHeap<T>{
 	 * @param key
 	 */
 	public void increaseHeapKey(int location, int key) {
-		this.heap[location].setKey(key);
-		this.maxHeapify(this.parent(location));		
+		heap[location].setKey(key);
+		maxHeapify(parent(location));		
 	}
 	/**
 	 * 
@@ -71,12 +71,12 @@ public class MaxHeap<T>{
 	 * @param key
 	 */
 	public void maxHeapInsert(T data, int key) {
-		if (this.heapSize == this.capacity) {
-			this.expandCapacity();
+		if (heapSize == capacity) {
+			expandCapacity();
 		}
-		this.heap[++this.heapSize] = new HeapNode<T>(data, key);
-		if (this.heapSize > 1) {
-			this.maxHeapify(this.parent(this.heapSize));		
+		heap[++heapSize] = new HeapNode<T>(data, key);
+		if (heapSize > 1) {
+			maxHeapify(parent(heapSize));		
 		}
 	}
 	/**
@@ -85,19 +85,19 @@ public class MaxHeap<T>{
 	 */
 	public void maxHeapify(int location) {
 		int largest = 0;
-		int left = this.left(location);
-		int right = this.right(location);		
-		if (left <= this.heapSize && this.heap[left].getKey() > this.heap[location].getKey()) {
+		int left = left(location);
+		int right = right(location);		
+		if (left <= heapSize && heap[left].getKey() > heap[location].getKey()) {
 			largest = left;
 		} else {
 			largest = location;
 		}
-		if (right <= this.heapSize && this.heap[right].getKey() > this.heap[largest].getKey()) {
+		if (right <= heapSize && heap[right].getKey() > heap[largest].getKey()) {
 			largest = right;
 		}
 		if (largest != location) {
-			this.exchange(location, largest);
-			this.maxHeapify(largest);
+			exchange(location, largest);
+			maxHeapify(largest);
 		}		
 	}
 	/**
@@ -105,19 +105,19 @@ public class MaxHeap<T>{
 	 * @return
 	 */
 	public int getHeapSize() {
-		return this.heapSize;
+		return heapSize;
 	}
 	/**
 	 * 
 	 * @return
 	 */
 	public boolean isEmpty() {
-		return (this.heapSize == 0);
+		return (heapSize == 0);
 	}
 	
 	private void expandCapacity() {
-		this.setCapacity(this.heapSize * 2);
-		this.heap = Arrays.copyOf(this.heap, this.capacity);		
+		setCapacity(heapSize * 2);
+		heap = Arrays.copyOf(heap, capacity);		
 	}
 	
 	// TODO - ask about this method - why and what it does?
@@ -126,9 +126,9 @@ public class MaxHeap<T>{
 	}
 	
 	private void exchange(int locationA, int locationB) {
-		HeapNode<T> priorA = (HeapNode<T>) this.heap[locationA];
-		this.heap[locationA] = this.heap[locationB];
-		this.heap[locationB] = priorA;
+		HeapNode<T> priorA = (HeapNode<T>) heap[locationA];
+		heap[locationA] = heap[locationB];
+		heap[locationB] = priorA;
 		priorA = null;
 	}
 	
@@ -144,13 +144,11 @@ public class MaxHeap<T>{
 		return (location / 2);
 	}
 	
-	// TODO - Ask why this method
 	private void setHeapSize(int size) {
-		this.heapSize = size;
+		heapSize = size;
 	}
 	
-	// TODO - Ask why this method
 	private void setCapacity(int newCapacity) {
-		this.capacity = newCapacity;
+		capacity = newCapacity;
 	}
 }
