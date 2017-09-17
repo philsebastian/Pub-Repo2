@@ -7,27 +7,29 @@ import java.util.Arrays;
  */
 public class MaxHeap<T>{
 	
-	private HeapNode<?>[] heap; // PHIL TODO - check this
+	private HeapNode<T>[] heap; 
 	private int heapSize;
 	private int capacity;
-	private int DEFAULT_CAPACITY = 11;
+	private int DEFAULT_CAPACITY = 50;
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	public MaxHeap() {
 		setCapacity(DEFAULT_CAPACITY);
 		setHeapSize(0);
-		heap = new HeapNode<?>[capacity + 1]; // PHIL TODO - check this
+		heap = new HeapNode[capacity + 1]; 
 	}
 	/**
 	 * 
 	 * @param dataArray
 	 * @param keyArray
 	 */
+	@SuppressWarnings("unchecked")
 	public MaxHeap(T[] dataArray, int[] keyArray) { 	
 		setCapacity(dataArray.length);
 		setHeapSize(dataArray.length);
-		heap = new HeapNode<?>[capacity + 1]; // PHIL TODO - check this
+		heap = new HeapNode[capacity + 1]; 
 		
 		// Below A.K.A. Build-Max-Heap
 		// First build array
@@ -52,8 +54,12 @@ public class MaxHeap<T>{
 	 */
 	public T extractHeapMax() {
 		T tmpT = heapMax();
-		heap[1] = heap[heapSize--];
-		maxHeapify(1);
+		heapSize--;
+		if (heapSize > 0) {
+			exchange(1, heapSize + 1);
+			heap[heapSize + 1] = null;			
+			maxHeapify(1);
+		}			 		
 		return tmpT;
 	}
 	/**
@@ -61,23 +67,26 @@ public class MaxHeap<T>{
 	 * @param location
 	 * @param key
 	 */
-	public void increaseHeapKey(int location, int key) {
-		heap[location].setKey(key);
-		maxHeapify(parent(location));		
+	public void increaseHeapKey(int location, int key) { 
+		if (key < heap[location].getKey()) {
+			throw new RuntimeException();
+		} else {
+			heap[location].setKey(key);
+			moveUp(location);
+		}
 	}
 	/**
 	 * 
 	 * @param data
 	 * @param key
 	 */
-	public void maxHeapInsert(T data, int key) {
+	public void maxHeapInsert(T data, int key) { // TODO - check this
 		if (heapSize == capacity) {
 			expandCapacity();
 		}
-		heap[++heapSize] = new HeapNode<T>(data, key);
-		if (heapSize > 1) {
-			maxHeapify(parent(heapSize));		
-		}
+		heapSize++;
+		heap[heapSize] = new HeapNode<T>(data, key);
+		moveUp(heapSize);
 	}
 	/**
 	 * 
@@ -120,9 +129,12 @@ public class MaxHeap<T>{
 		heap = Arrays.copyOf(heap, capacity);		
 	}
 	
-	// TODO - ask about this method - why and what it does?
 	private void moveUp(int location) {
-		// TODO
+		int i = location;
+		while (i >= 2 && (heap[parent(i)].getKey() < heap[i].getKey())) {
+			exchange(i, parent(i));
+			i = parent(i);
+		}
 	}
 	
 	private void exchange(int locationA, int locationB) {

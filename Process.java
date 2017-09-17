@@ -36,7 +36,7 @@ public class Process {
 	}
 	
 	public boolean done() {
-		return (timeToFinish <= 0);
+		return (timeToFinish < 0);
 	}
 	
 	public int getArrivalTime() {
@@ -55,6 +55,10 @@ public class Process {
 	
 	public void resetTimeNotProcessed() {
 		timeNotProcessed = 0;
+	}
+	
+	public int getTimeToFinish() {
+		return timeToFinish;
 	}
 	
 	public int getMaxPriorityLevel() {
@@ -80,4 +84,6 @@ public class Process {
 	private void setArrivalTime(int newArrivalTime) {
 		arrivalTime = newArrivalTime;
 	}
+	
+	
 }

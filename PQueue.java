@@ -9,38 +9,34 @@ public class PQueue<T> {
 	private MaxHeap<T> maxHeap;
 	
 	public PQueue() {
-		// TODO	
+		maxHeap = new MaxHeap<T>();
 	}
 	
 	public PQueue(T[] dataArray, int[] keyArray) {
-		// TODO		
+		maxHeap = new MaxHeap<T>(dataArray, keyArray);
 	}
 	
 	public T maximum() {
-		// TODO
-		return null;
+		return maxHeap.heapMax();
 	}
 	
 	public T extractMax() {
-		// TODO
-		return null;
+		return maxHeap.extractHeapMax();
 	}
 	
 	public void increaseKey(int location, int newKey) {
-		// TODO
+		maxHeap.increaseHeapKey(location, newKey);
 	}
 	
 	public void insert(T data, int key) {
-		// TODO
+		maxHeap.maxHeapInsert(data, key);
 	}
 	
 	public boolean isEmpty() {
-		// TODO
-		return false;
+		return maxHeap.isEmpty();
 	}
 	
 	public int size() {
-		// TODO
-		return 0;
+		return maxHeap.getHeapSize();
 	}
 }

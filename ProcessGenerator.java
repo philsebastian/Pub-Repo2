@@ -10,21 +10,39 @@ public class ProcessGenerator {
 	private double probability;
 	private Random random;
 	
+	/**
+	 * 
+	 * @param probability
+	 */
 	public ProcessGenerator(double probability) {
-		// TODO
+		setProbability(probability);
+		random = new Random();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean query() {
-		// TODO
+		double newProb = random.nextDouble();
+		if (newProb  < probability) {
+			return true;
+		}
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param currentTime
+	 * @param maximumProcessTime
+	 * @param maximumPriorityLevel
+	 * @return
+	 */
 	public Process getNewProcess(int currentTime, int maximumProcessTime, int maximumPriorityLevel) {
-		// TODO
-		return null;
+		return new Process(currentTime, random.nextInt(maximumPriorityLevel) + 1, random.nextInt(maximumProcessTime) + 1, maximumPriorityLevel);
 	}
 	
 	private void setProbability(double newProbability) {
-		// TODO
+		probability = newProbability;
 	}
 }
