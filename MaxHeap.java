@@ -56,10 +56,11 @@ public class MaxHeap<T>{
 		T tmpT = heapMax();
 		heapSize--;
 		if (heapSize > 0) {
-			exchange(1, heapSize + 1);
+			exchange(heapSize + 1, 1);
 			heap[heapSize + 1] = null;			
 			maxHeapify(1);
-		}			 		
+		}
+		heap[heapSize + 1] = null;			
 		return tmpT;
 	}
 	/**
@@ -161,6 +162,10 @@ public class MaxHeap<T>{
 	}
 	
 	private void setCapacity(int newCapacity) {
-		capacity = newCapacity;
+		if (newCapacity < DEFAULT_CAPACITY) {
+			capacity = 50;
+		} else {
+			capacity = newCapacity;
+		}
 	}
 }

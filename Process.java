@@ -36,7 +36,7 @@ public class Process {
 	}
 	
 	public boolean done() {
-		return (timeToFinish < 0);
+		return (timeToFinish <= 0);
 	}
 	
 	public int getArrivalTime() {
@@ -83,6 +83,10 @@ public class Process {
 	
 	private void setArrivalTime(int newArrivalTime) {
 		arrivalTime = newArrivalTime;
+	}
+	
+	public String toString() {
+		return "Arrival Time: " + arrivalTime + "; TimeToFinish: " + timeToFinish + "; TimeNotProcessed: " + timeNotProcessed + "; Current Priority: " + priorityLevel;		
 	}
 	
 	
