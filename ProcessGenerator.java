@@ -16,7 +16,7 @@ public class ProcessGenerator {
 	 */
 	public ProcessGenerator(double probability) {
 		setProbability(probability);
-		random = new Random();
+		random = new Random(111);
 	}
 	
 	/**

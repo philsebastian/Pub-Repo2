@@ -124,6 +124,7 @@ class CPUScheduler
     		}
     		// rebuild priority queue 
     		pq = new PQueue<Process>(processes, keys); 
+    		int size = pq.size(); // TODO -- added to test return -- Ask why size is one here but when we stepout the pqueue size is no zero??
     	}
 }
 
