@@ -1,6 +1,6 @@
 import java.util.Arrays;
 /**
- * 
+ * Class to create a MaxHeap Data Structure for T objects
  * @author Phillip Sebastian
  *
  * @param <T>
@@ -12,7 +12,7 @@ public class MaxHeap<T>{
 	private int capacity;
 	private int DEFAULT_CAPACITY = 50;
 	/**
-	 * 
+	 * Constructor for an empty MaxHeap. Uses default capacity of 50.
 	 */
 	@SuppressWarnings("unchecked")
 	public MaxHeap() {
@@ -21,9 +21,9 @@ public class MaxHeap<T>{
 		heap = new HeapNode[capacity + 1]; 
 	}
 	/**
-	 * 
-	 * @param dataArray
-	 * @param keyArray
+	 * Constructor to create a new maxheap based on the parameter arrays.
+	 * @param dataArray - array of T objects .
+	 * @param keyArray - array of corresponding keys for the data array.
 	 */
 	@SuppressWarnings("unchecked")
 	public MaxHeap(T[] dataArray, int[] keyArray) { 	
@@ -42,15 +42,15 @@ public class MaxHeap<T>{
 		}
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the maximum from the heap. No change to heap.
+	 * @return T object from maximum of heap
 	 */
 	public T heapMax() {
 		return (T) heap[1].getObject();
 	}
 	/**
-	 * 
-	 * @return
+	 * Get and remove maximum from the heap
+	 * @return T object from maximum of heap
 	 */
 	public T extractHeapMax() {
 		T tmpT = heapMax();
@@ -64,24 +64,22 @@ public class MaxHeap<T>{
 		return tmpT;
 	}
 	/**
-	 * 
-	 * @param location
-	 * @param key
+	 * Method to replace the key of a specific node at location
+	 * @param location - location to change
+	 * @param key - new key
 	 */
 	public void increaseHeapKey(int location, int key) { 
-		if (key < heap[location].getKey()) {
-			throw new RuntimeException();
-		} else {
+		if (key > heap[location].getKey()) { // Only need to change if newKey is larger
 			heap[location].setKey(key);
 			moveUp(location);
 		}
 	}
 	/**
-	 * 
-	 * @param data
-	 * @param key
+	 * Method to insert a new node to max heap
+	 * @param data - T Object
+	 * @param key - key for object
 	 */
-	public void maxHeapInsert(T data, int key) { // TODO - check this
+	public void maxHeapInsert(T data, int key) {
 		if (heapSize == capacity) {
 			expandCapacity();
 		}
@@ -90,7 +88,7 @@ public class MaxHeap<T>{
 		moveUp(heapSize);
 	}
 	/**
-	 * 
+	 * Method to check max heap properties starting at location
 	 * @param location
 	 */
 	public void maxHeapify(int location) {
@@ -111,25 +109,30 @@ public class MaxHeap<T>{
 		}		
 	}
 	/**
-	 * 
-	 * @return
+	 * Returns the size of heap
+	 * @return Size of Heap 
 	 */
 	public int getHeapSize() {
 		return heapSize;
 	}
 	/**
-	 * 
-	 * @return
+	 * Returns boolean if heap is empty
+	 * @return boolean
 	 */
 	public boolean isEmpty() {
 		return (heapSize == 0);
 	}
-	
+	/**
+	 * Private method to expand heap array
+	 */
 	private void expandCapacity() {
 		setCapacity(heapSize * 2);
 		heap = Arrays.copyOf(heap, capacity);		
 	}
-	
+	/**
+	 * Private method to move a node up the heap if necessary
+	 * @param location
+	 */
 	private void moveUp(int location) {
 		int i = location;
 		while (i >= 2 && (heap[parent(i)].getKey() < heap[i].getKey())) {
@@ -137,32 +140,54 @@ public class MaxHeap<T>{
 			i = parent(i);
 		}
 	}
-	
+	/**
+	 * Private method to change the node at two locations 
+	 * @param locationA
+	 * @param locationB
+	 */
 	private void exchange(int locationA, int locationB) {
 		HeapNode<T> priorA = (HeapNode<T>) heap[locationA];
 		heap[locationA] = heap[locationB];
 		heap[locationB] = priorA;
 		priorA = null;
 	}
-	
+	/**
+	 * Private method to return the location of the left node
+	 * @param location
+	 * @return
+	 */
 	private int left(int location) {
 		return (location * 2);
 	}
-	
+	/**
+	 * Private method to return the location of the right node
+	 * @param location
+	 * @return
+	 */
 	private int right(int location) {
 		return (location * 2 + 1);
 	}
-	
+	/**
+	 * Private method to return the location of the parent node
+	 * @param location
+	 * @return
+	 */
 	private int parent(int location) {
 		return (location / 2);
 	}
-	
+	/**
+	 * Private method to set heap size
+	 * @param size
+	 */
 	private void setHeapSize(int size) {
 		heapSize = size;
 	}
-	
+	/**
+	 * Private method to set a new capacity if greater than DEFAULT_CAPACITY
+	 * @param newCapacity
+	 */
 	private void setCapacity(int newCapacity) {
-		if (newCapacity < DEFAULT_CAPACITY) {
+		if (newCapacity < DEFAULT_CAPACITY) { // Check to make sure that the new capacity is greater than the default
 			capacity = 50;
 		} else {
 			capacity = newCapacity;

@@ -65,7 +65,7 @@ class CPUScheduler
 			    {
 					next = pqueue.extractMax();
 					next.reduceTimeRemaining();
-					update(pqueue, timeToIncrementPriority);
+					pqueue = update(pqueue, timeToIncrementPriority);
 					
 					if (next.done())
 				    {
@@ -100,7 +100,7 @@ class CPUScheduler
     	 * @param pq - PQueue object
     	 * @param timeToIncrementPriority - int value 
     	 */
-    	public static void update(PQueue<Process> pq, int timeToIncrementPriority)
+    	public static PQueue<Process> update(PQueue<Process> pq, int timeToIncrementPriority)
     	{
     		int count = pq.size(); 
     		int timeNP;
@@ -124,7 +124,7 @@ class CPUScheduler
     		}
     		// rebuild priority queue 
     		pq = new PQueue<Process>(processes, keys); 
-    		int size = pq.size(); // TODO -- added to test return -- Ask why size is one here but when we stepout the pqueue size is no zero??
+    		return pq;
     	}
 }
 
